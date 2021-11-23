@@ -2,51 +2,48 @@ import enum
 import random
 
 class Direction(enum.Enum):
-    def __init__(self):
-        self.N = 0
-        self.S = 1
-        self.E = 2
-        self.W = 3
-        self.NE = 4
-        self.NW = 5
-        self.SE = 6
-        self.SW = 7
+    N = 0
+    S = 1
+    E = 2
+    W = 3
+    NE = 4
+    NW = 5
+    SE = 6
+    SW = 7
         
-        
-    def get_rand_direction(self):
+    def get_rand_direction():
         direction = random.randint(0, 7)
-        if direction == 0:
+        if direction == Direction.N.value:
             return (0, -1)
-        elif direction == 1:
+        elif direction == Direction.S.value:
             return (0, 1)
-        elif direction == 2:
-            return self.E
-        elif direction == 3:
-            return self.W
-        elif direction == 4:
-            return self.NE
-        elif direction == 5:
-            return self.NW
-        elif direction == 6:
-            return self.SE
-        elif direction == 7:
-            return self.SW
+        elif direction == Direction.E.value:
+            return (1, 0)
+        elif direction == Direction.W.value:
+            return (-1, 0)
+        elif direction == Direction.NE.value:
+            return (1, -1)
+        elif direction == Direction.NW.value:
+            return (-1, -1)
+        elif direction == Direction.SE.value:
+            return (1, 1)
+        elif direction == Direction.SW.value:
+            return (-1, 1)
         
 class Edge(enum.Enum):
-    def __init__(self):
-        self.TOP = 0
-        self.BOTTOM = 1
-        self.LEFT = 2
-        self.RIGHT = 3
+    TOP = 0
+    BOTTOM = 1
+    LEFT = 2
+    RIGHT = 3
         
         
-    def get_rand_edge(self):
+    def get_rand_edge():
         edge = random.randint(0, 3)
         if edge == 0:
-            return self.TOP
+            return Edge.TOP
         elif edge == 1:
-            return self.BOTTOM
+            return Edge.BOTTOM
         elif edge == 2:
-            return self.LEFT
+            return Edge.LEFT
         elif edge == 3:
-            return self.RIGHT
+            return Edge.RIGHT
