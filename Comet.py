@@ -1,0 +1,50 @@
+from Particle import Particle
+import schema
+
+import random
+
+class Comet:
+    def __init__(self, max_x, max_y):
+        self._epicenter = None
+        self._stage = 0
+        self._direction = (0, 0)
+        self._radius = random.randint(2, 5)
+        self.particles = [list() for i in range(self._radius)]
+        self.max_x = max_x
+        self.max_y = max_y
+        
+        
+    def get_starting_point(self):
+        self._direction = schema.Direction.get_rand_direction()
+        edge = schema.Edge.get_rand_edge()
+            
+        if edge == schema.Edge.TOP:
+            self._epicenter = Particle(random.randint(0, self.max_x), 0)
+        elif edge == schema.Edge.BOTTOM:
+            self._epicenter = Particle(random.randint(0, self.max_x), self.max_y)
+        elif edge == schema.Edge.LEFT:
+            self._epicenter = Particle(0, random.randint(0, self.max_y))
+        else:
+            self._epicenter = Particle(self.max_x, random.randint(0, self.max_y))
+    
+    
+    def set_particles(self):
+        if self._stage == 0:
+            self.particles = [self._epicenter]
+            offset = (-self._radius, -self._radius)
+            for row in range(self.radius):
+                offset[0] += 1
+                for col in range(self.radius):
+                    offset[1] += 1
+                    self.particles[row].append(Particle(self._epicenter.x + offset[0], self._epicenter.y + offset[1]))
+        
+        else:
+            
+            offset = (-self._radius, -self._radius)
+            for row in range(self.radius):
+                offset[0] += 1
+                for col in range(self.radius):
+                    offset[1] += 1
+                    
+                    self.particles[row].append(Particle(self._epicenter.x + offset[0], self._epicenter.y + offset[1]))
+        
