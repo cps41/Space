@@ -17,9 +17,10 @@ class Particle:
             Returns:
                 display(Boolean): True for display on, False for display off
         """
-        return bool(random.getrandbits(1))
+        self.present = bool(random.getrandbits(1))
+        self.brightness = random.randint(1, 10)
     
-    def set_present(self, present):
+    def set_present(self, present, brightness):
         """ Method for forcibly setting particle to display
             
             Params:
@@ -28,6 +29,7 @@ class Particle:
                 None
         """
         self.present = present
+        self.brightness = brightness
         
     def get_present(self):
         """ Method for getting particle display status
