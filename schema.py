@@ -2,33 +2,18 @@ import enum
 import random
 
 class Direction(enum.Enum):
-    N = 0
-    S = 1
-    E = 2
-    W = 3
-    NE = 4
-    NW = 5
-    SE = 6
-    SW = 7
+    N = (0, -1)
+    S = (0, 1)
+    E = (1, 0)
+    W = (-1, 0)
+    NE = (1, -1)
+    NW = (-1, -1)
+    SE = (1, 1)
+    SW = (-1, 1)
         
     def get_rand_direction():
-        direction = random.randint(0, 7)
-        if direction == Direction.N.value:
-            return (0, -1)
-        elif direction == Direction.S.value:
-            return (0, 1)
-        elif direction == Direction.E.value:
-            return (1, 0)
-        elif direction == Direction.W.value:
-            return (-1, 0)
-        elif direction == Direction.NE.value:
-            return (1, -1)
-        elif direction == Direction.NW.value:
-            return (-1, -1)
-        elif direction == Direction.SE.value:
-            return (1, 1)
-        elif direction == Direction.SW.value:
-            return (-1, 1)
+        return random.choice(list(Direction.__members__.values())).value
+
         
 class Edge(enum.Enum):
     TOP = 0
