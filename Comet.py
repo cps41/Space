@@ -1,6 +1,7 @@
 from Particle import Particle
 import schema
 import random
+import time
 
 
 def is_between(min, actual, max):
@@ -59,7 +60,7 @@ class Comet:
             self._available_y = [y for y in range(1, self._radius)]
         elif self._direction == schema.Direction.E.value \
             or self._direction == schema.Direction.W.value:
-            self._available_y = [y for y in range(self._radius//2, self._radius+ (self._radius//2))]
+            self._available_y = [y for y in range(self._radius//2, self._radius+self._radius//2)]
         else:
             self._available_y = [y for y in range(self._radius-1, self._radius*2)]
         
@@ -72,7 +73,7 @@ class Comet:
             or self._direction == schema.Direction.SW.value:
             self._available_x = [x for x in range(1, self._radius)]
         else:
-            self._available_x = [x for x in range(self._radius//2, self._radius*2)]
+            self._available_x = [x for x in range(self._radius//2, self._radius+self._radius//2)]
     
     def set_particles(self):
         """ Method for setting the location/display of the particles that make up the comet.
@@ -114,7 +115,8 @@ class Comet:
 
 
     def debug_string(self):
-        build_string = "  \t"
+        direction = schema.Direction.get_description(self._direction[0], self._direction[1])
+        build_string = f"Direction: {direction}\n  \t"
         diameter = self._radius*2+1
         for i in range(diameter):
             build_string += f'{i} '
@@ -126,4 +128,13 @@ class Comet:
                 else:
                     build_string += '* '
         print(build_string)
+
+
+def print_debug_string(iter=10, max_x=20, max_y=20):
+    comet = Comet(20, 20)
+    for i in range(iter):
+        comet.set_particles()
+        comet.debug_string()
+        time.sleep(0.5)
+    return comet
         

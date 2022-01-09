@@ -13,6 +13,19 @@ class Direction(enum.Enum):
         
     def get_rand_direction():
         return random.choice(list(Direction.__members__.values())).value
+    
+    def get_description(x, y):
+        if x == 0:
+            if y == -1: return "N"
+            else: return "S"
+        elif x == 1:
+            if y == 0: return "E"
+            elif y == 1: return "SE"
+            else: return "NE"
+        else:
+            if y == 0: return "W"
+            elif y == 1: return "SW"
+            else: return "NW"
 
         
 class Edge(enum.Enum):
