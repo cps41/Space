@@ -66,7 +66,7 @@ class Particle:
         self.y += y_offset
         return (self.x, self.y)
 
-    def get_location(self, x, y):
+    def get_location(self):
         """ Method for getting particle location
             
             Params:
@@ -74,5 +74,5 @@ class Particle:
             Return:
                 (x(int), y(int)): (x axis location, y axis location)
         """
-        return (self.x, self.y)
+        return self.x, self.y
 

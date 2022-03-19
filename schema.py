@@ -45,3 +45,9 @@ class Edge(enum.Enum):
             return Edge.LEFT
         elif edge == 3:
             return Edge.RIGHT
+
+
+class Color(enum.Enum):
+    WHITE = (230, 230, 230)
+    MAX_WHITE = (255, 255, 255)
+    BLACK = (0,0,0)
