@@ -1,11 +1,8 @@
 import time
-import logging
-import board
+from machine import Pin
 import neopixel
 import random
-import enum
 
-LOG = logging.Logger("Space")
 
 
 class Space:
@@ -13,7 +10,7 @@ class Space:
         self.width = width
         self.height = height
         self.Objects = []
-        self.pixels = neopixel.NeoPixel(board.D0, width*height, brightness=0.5)
+        self.pixels = neopixel.NeoPixel(Pin(15, Pin.OUT), width*height, brightness=0.5)
     def coordinates_to_index(self, col, row):
         """ Expected input is a pixel's x, y which translates to (col, row) in a grid 
             Formula for converting coordinates of a grid to an index is (width*row)+col """
@@ -55,10 +52,10 @@ class Space:
             self.Objects.remove(obj)
         time.sleep(0.25)
     def start(self):
-        LOG.info(f"***********Creating space grid of size {self.width} by {self.height}***********")
-        LOG.info("Starting Events...")
+        print(f"***********Creating space grid of size {self.width} by {self.height}***********")
+        print("Starting Events...")
         while True:
-            self.create_object()
+            self.create_object(Comet)
             self.update_pixels()
             self.pixels.show()
 
@@ -113,23 +110,23 @@ class Comet:
         self._tail = [(self._radius-(self._direction[1]*r), self._radius-(self._direction[0]*r)) for r in range(self._radius)]
 
         # get bulk head
-        if self._direction == Direction.N.value \
-            or self._direction == Direction.NE.value \
-            or self._direction == Direction.NW.value:
+        if self._direction == Direction.N \
+            or self._direction == Direction.NE \
+            or self._direction == Direction.NW:
             self._available_y = [y for y in range(1, self._radius)]
-        elif self._direction == Direction.E.value \
-            or self._direction == Direction.W.value:
+        elif self._direction == Direction.E \
+            or self._direction == Direction.W:
             self._available_y = [y for y in range(self._radius//2, self._radius+self._radius//2)]
         else:
             self._available_y = [y for y in range(self._radius-1, self._radius*2)]
         
-        if self._direction == Direction.E.value \
-            or self._direction == Direction.NE.value \
-            or self._direction == Direction.SE.value:
+        if self._direction == Direction.E \
+            or self._direction == Direction.NE \
+            or self._direction == Direction.SE:
             self._available_x = [x for x in range(self._radius-1, self._radius*2)]
-        elif self._direction == Direction.W.value \
-            or self._direction == Direction.NW.value \
-            or self._direction == Direction.SW.value:
+        elif self._direction == Direction.W \
+            or self._direction == Direction.NW \
+            or self._direction == Direction.SW:
             self._available_x = [x for x in range(1, self._radius)]
         else:
             self._available_x = [x for x in range(self._radius//2, self._radius+self._radius//2)]
@@ -197,7 +194,7 @@ def print_debug_string(iter=10, max_x=20, max_y=20):
         time.sleep(0.5)
     return comet
 
-class Direction(enum.Enum):
+class Direction:
     N = (0, -1)
     S = (0, 1)
     E = (1, 0)
@@ -208,7 +205,7 @@ class Direction(enum.Enum):
     SW = (-1, 1)
         
     def get_rand_direction():
-        return random.choice(list(Direction.__members__.values())).value
+        return random.choice(list(Direction.__members__.values()))
     
     def get_description(x, y):
         if x == 0:
@@ -224,7 +221,7 @@ class Direction(enum.Enum):
             else: return "NW"
 
         
-class Edge(enum.Enum):
+class Edge:
     TOP = 0
     BOTTOM = 1
     LEFT = 2
@@ -243,7 +240,7 @@ class Edge(enum.Enum):
             return Edge.RIGHT
 
 
-class Color(enum.Enum):
+class Color:
     WHITE = (230, 230, 230)
     MAX_WHITE = (255, 255, 255)
     BLACK = (0,0,0)
